@@ -16,18 +16,22 @@ function queryErrorHandler(error: unknown): void {
 }
 
 const minutes = (number: number) => 1000 * 60 * number;
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      onError: queryErrorHandler,
-      staleTime: minutes(10),
-      cacheTime: minutes(15),
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      refetchOnWindowFocus: false,
+export const generateQueryClient = (): QueryClient => {
+  return new QueryClient({
+    defaultOptions: {
+      queries: {
+        onError: queryErrorHandler,
+        staleTime: minutes(10),
+        cacheTime: minutes(15),
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        refetchOnWindowFocus: false,
+      },
+      mutations: {
+        onError: queryErrorHandler,
+      },
     },
-    mutations: {
-      onError: queryErrorHandler,
-    },
-  },
-});
+  });
+};
+
+export const queryClient = generateQueryClient();
